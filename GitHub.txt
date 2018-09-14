@@ -1,3 +1,13 @@
+Logging in to git:
+	git config --global user.email "you@example.com"
+	git config -- global user.name "Your Name"
+
 Createing Repository:
-	Go to directory and type git init
+	git init
+	git add .
+	git commit -m "Repository Creation"
+	git remote add origin "remote repository URL"
+		done after adding new repository on git website
+	git remote -v
+	git push origin master
 	
