@@ -3,6 +3,7 @@
 
 void swap(int* a, int* b)
 {
+	// Swaps a and b
 	int temp = *a;
 	*a = *b;
 	*b = temp;
@@ -11,31 +12,36 @@ void swap(int* a, int* b)
 
 int partition(int arr[], int low, int high)
 {
-	int pivot = arr[high];
+	int pivot = arr[high];	// Pivot is the last element in the array
 	int i = low-1;
 
 	for(int j = low; j<=high-1; ++j)
 	{
+		// move everything less than or equal to the pivot to the left side of the array
 		if(arr[j]<=pivot)
 		{
-			++i;
+			++i;	// Moves position from the left by 1 for swapping
 			swap(&arr[i], &arr[j]);
 		}
 	}
 
-	swap(&arr[i+1], &arr[high]);
-	return (i+1);
+	swap(&arr[i+1], &arr[high]);	// Swap the pivot into position
+	// Everything left <= Pivot
+	// Everything right >= Pivot
+	return (i+1);	// Return pivot position
 
 }
 
 
 void QuickSort(int arr[], int low, int high)
 {
+	// low and high are positions in the array spanning the length
+	//		or sublength in recursive calls
 	if(low<high)
 	{
-		int pivot_index = partition(arr, low, high);
-		QuickSort(arr, low, pivot_index-1);
-		QuickSort(arr, pivot_index+1, high);
+		int pivot_index = partition(arr, low, high);	// The position where swapping takes place
+		QuickSort(arr, low, pivot_index-1);				// Will partition everyting left of pivot
+		QuickSort(arr, pivot_index+1, high);			// Will partition everything right of pivot
 
 	}
 }
@@ -44,6 +50,7 @@ void QuickSort(int arr[], int low, int high)
 
 void print(int arr[], int size)
 {
+	// Prints out an int array
 	for(int i=0; i<size; ++i)
 	{
 		std::cout << arr[i];

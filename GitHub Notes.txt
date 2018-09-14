@@ -13,4 +13,6 @@ Creating Repository:
 		used -f to force the update
 	
 Updating:
-	
+	git add .
+	git commit -m "Message"
+	git push origin master

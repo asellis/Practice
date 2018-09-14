@@ -6,8 +6,10 @@ void merge(int arr[], int left, int mid, int right)
 	int n1 = mid-left +1;
 	int n2 = right - mid;
 
-	int L[n1], R[n2];
+	int L[n1], R[n2];	// Arrays to hold left and right side of mid
+	// L and R will already be sorted
 
+	// Copy left and right side of array into L and R
 	for (i=0; i<n1; i++)
 		L[i]=arr[left+i];
 	for (j=0; j<n2; j++)
@@ -19,6 +21,8 @@ void merge(int arr[], int left, int mid, int right)
 
 	while(i<n1 && j<n2)
 	{
+		// Move smaller element of either L or R into array
+		// L and R are already sorted
 		if(L[i]<=R[j])
 		{
 			arr[k]=L[i];
@@ -51,10 +55,10 @@ void MergeSort(int arr[], int left, int right)
 {
 	if(left<right)
 	{
-		int mid = left+(right-left)/2;
+		int mid = left+(right-left)/2;	// middle index, same as (left+right)/2
 
-		MergeSort(arr, left, mid);
-		MergeSort(arr, mid+1, right);
+		MergeSort(arr, left, mid);		// MergeSort left half
+		MergeSort(arr, mid+1, right);	// MergeSort right half
 
 		merge(arr, left, mid, right);
 	}
@@ -63,6 +67,7 @@ void MergeSort(int arr[], int left, int right)
 
 void print(int arr[], int size)
 {
+	// Prints out array
 	for(int i=0; i<size; ++i)
 	{
 		std::cout << arr[i];
