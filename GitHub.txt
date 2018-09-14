@@ -1,0 +1,3 @@
+Createing Repository:
+	Go to directory and type git init
+	
