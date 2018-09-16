@@ -1,3 +1,13 @@
+/*
+Recursively sorts the left and right halves of an array.
+As the recursion returns from the base case, the left and right
+halves of the array will be sorted.  The algorithm then compares
+the first items in the left and right halves that have been sorted
+and puts the minimal value into a new array which will be returned.
+The algorithm then moves to the next element in either the left or
+right half, depending on which element was put into the array.
+*/
+
 #include <iostream>
 
 void merge(int arr[], int left, int mid, int right)

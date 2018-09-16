@@ -1,3 +1,9 @@
+/*
+Sorts an array by selecting a pivot and moving everything less than or equal
+to the pivot to the left of the pivot and everything greater than to the right.
+*/
+
+
 #include <iostream>
 
 
