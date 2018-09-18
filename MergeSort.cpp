@@ -90,6 +90,7 @@ void print(int arr[], int size)
 
 int main()
 {
+	// Testing merge sort and printing the resulting array
 	int arr[] = {4, 3, 1, 5, 2};
 
 	print(arr, 5);
