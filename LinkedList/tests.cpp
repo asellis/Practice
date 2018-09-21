@@ -4,16 +4,43 @@
 #include <assert.h>
 #include <iostream>
 
-void emptyInitializer(bool print)
+void emptyConstructor(bool print)
 {
 	if(print)
-		std::cout << "emptyInitializer";
+		std::cout << "emptyConstructor";
 
 	LinkedList<int>();
 	LinkedList<int> a = LinkedList<int>();
 
 	if(print)
 		std::cout << "\tPassed" << std::endl;
+}
+
+void copyConstructor(bool print)
+{
+	if(print)
+		std::cout << "copyConstructor";
+	bool pass = true;
+	try
+	{
+		LinkedList<int> a = LinkedList<int>();
+		LinkedList<int> b = LinkedList<int>(a);
+		a.addToStart(1);
+		LinkedList<int> c = LinkedList<int>(a);
+		pass = pass && bool(c.first() == 1);
+		
+	}
+	catch(...)
+	{
+		pass = false;
+	}
+
+	if(print && pass)
+		std::cout << "\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\tFailed" << std::endl;
+	
+
 }
 
 void addToStart(bool print)
@@ -33,7 +60,7 @@ void addToStart(bool print)
 
 	if(print && pass)
 		std::cout << "\t\tPassed" << std::endl;
-	else
+	else if(print)
 		std::cout << "\t\tFailed" << std::endl;
 }
 
@@ -51,7 +78,7 @@ void addToEnd(bool print)
 
 	if(print && pass)
 		std::cout << "\t\tPassed" << std::endl;
-	else
+	else if(print)
 		std::cout << "\t\tFailed" << std::endl;
 }
 
@@ -80,6 +107,75 @@ void first(bool print)
 
 	if(print && pass)
 		std::cout << "\t\t\tPassed" << std::endl;
-	else
+	else if(print)
 		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void end(bool print)
+{
+	if(print)
+		std::cout << "end";
+	bool pass = true;
+
+	LinkedList<int> a = LinkedList<int>();
+
+	try
+	{
+		a.first();
+		pass = false;
+	}
+	catch(...)
+	{
+		pass = pass && true;
+	}
+
+	a.addToEnd(1);
+	pass = pass && bool(a.end() == 1);
+	a.addToEnd(2);
+	pass = pass && bool(a.end() == 2);
+
+	LinkedList<int> b = LinkedList<int>();
+	b.addToStart(0);
+	pass = pass && bool(b.end() == 0);
+	b.addToStart(-1);
+	pass = pass && bool(b.end() == 0);
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void isEmpty(bool print)
+{
+	if(print)
+		std::cout << "isEmpty";
+	bool pass = true;
+	LinkedList<int> a = LinkedList<int>();
+	pass = pass && a.isEmpty();
+	a.addToStart(0);
+	pass = pass & !(a.isEmpty());
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void size(bool print)
+{
+	if(print)
+		std::cout << "size";
+	bool pass = true;
+	LinkedList<int> a = LinkedList<int>();
+	pass = pass && bool(a.size() == 0);
+	a.addToStart(0);
+	pass = pass && bool(a.size() == 1);
+	a.addToEnd(1);
+	pass = pass && bool(a.size() == 2);
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+
 }

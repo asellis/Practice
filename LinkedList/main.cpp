@@ -9,10 +9,14 @@ definition are both in the header file to avoid template issues.
 
 void testAll(bool print = false)
 {
-	emptyInitializer(print);
+	emptyConstructor(print);
+	copyConstructor(print);
 	addToStart(print);
 	addToEnd(print);
 	first(print);
+	end(print);
+	isEmpty(print);
+	size(print);
 }
 
 int main()

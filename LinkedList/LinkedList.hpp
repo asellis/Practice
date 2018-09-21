@@ -28,6 +28,9 @@ public:
 	// Empty initializer
 	LinkedList();
 
+	// Copy Constructor
+	LinkedList(const LinkedList& list);
+
 	// Destructor
 	~LinkedList();
 
@@ -45,7 +48,11 @@ public:
 	const Type& end() const;
 	Type& end();
 
+	// Returns true if empty
+	bool isEmpty() const;
 	
+	// Returns the size, 0 if empty
+	int size() const;
 };
 
 // Definitions
@@ -55,6 +62,36 @@ LinkedList<Type>::LinkedList()
 	// No nodes yet
 	head = nullptr;
 	tail = nullptr;
+}
+
+template <typename Type>
+LinkedList<Type>::LinkedList(const LinkedList& list)
+{
+	// check if empty
+	if(list.head == nullptr)
+	{
+		head = nullptr;
+		tail = nullptr;
+	}
+	else
+	{
+		// Initial node setup
+		Node* temp = list.head;
+		head = new Node;
+		head->value = temp->value;
+		tail = head;
+		temp = temp->next;
+
+		// All other nodes
+		while(temp!=nullptr)
+		{
+			tail->next = new Node;
+			tail = tail->next;
+			tail->value = temp->value;
+			temp = temp->next;
+		}
+		tail->next = nullptr;
+	}
 }
 
 template <typename Type>
@@ -145,4 +182,22 @@ Type& LinkedList<Type>::end()
 	return tail->value;
 }
 
+template <typename Type>
+bool LinkedList<Type>::isEmpty() const
+{
+	return bool(head == nullptr);
+}
+
+template <typename Type>
+int LinkedList<Type>::size() const
+{
+	int count = 0;
+	Node* temp = head;
+	while(temp != nullptr)
+	{
+		++count;
+		temp = temp->next;
+	}
+	return count;
+}
 #endif
