@@ -146,6 +146,113 @@ void end(bool print)
 		std::cout << "\t\t\tFailed" << std::endl;
 }
 
+void removeFromStart(bool print)
+{
+	if(print)
+		std::cout << "removeFromStart";
+	bool pass = true;
+
+	LinkedList<int> a = LinkedList<int>();
+	try
+	{
+		a.removeFromStart();
+		pass = false;
+	}
+	catch(...)
+	{
+	}
+
+	a.addToStart(1);
+	a.addToStart(0);
+	a.removeFromStart();
+	pass = pass && bool(a.first() == 1);
+
+	if(print && pass)
+		std::cout << "\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\tFailed" << std::endl;
+}
+
+void removeFromEnd(bool print)
+{
+	if(print)
+		std::cout << "removeFromEnd";
+	bool pass = true;
+
+	LinkedList<int> a = LinkedList<int>();
+	try
+	{
+		a.removeFromEnd();
+		pass = false;
+	}
+	catch(...)
+	{
+	}
+
+	a.addToEnd(0);
+	a.addToEnd(1);
+	a.removeFromEnd();
+	pass = pass && bool(a.end() == 0);
+
+	if(print && pass)
+		std::cout << "\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\tFailed" << std::endl;
+}
+
+void valueAt(bool print)
+{
+	if(print)
+		std::cout << "valueAt";
+	bool pass = true;
+	LinkedList<int> a = LinkedList<int>();
+	a.addToStart(0);
+	a.addToEnd(1);
+	a.addToEnd(2);
+	pass = pass && bool(a.valueAt(0) == 0) && bool(a.valueAt(1) == 1) && bool(a.valueAt(2) == 2);
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void addAt(bool print)
+{
+	if(print)
+		std::cout << "addAt";
+	bool pass = true;
+	LinkedList<int> a = LinkedList<int>();
+	a.addAt(0, 0);
+	a.addAt(1, 2);
+	pass = pass && bool(a.valueAt(1) == 2);
+	a.addAt(1, 1);
+	pass = pass && bool(a.valueAt(1) == 1) && bool(a.valueAt(2) == 2);
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void removeAt(bool print)
+{
+	if(print)
+		std::cout << "removeAt";
+	bool pass = true;
+	LinkedList<int> a = LinkedList<int>();
+	a.addToEnd(0);
+	a.addToEnd(1);
+	a.addToEnd(2);
+	a.removeAt(1);
+	pass = pass && bool(a.valueAt(1) == 2);
+
+	if(print && pass)
+		std::cout << "\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\tFailed" << std::endl;
+}
+
 void isEmpty(bool print)
 {
 	if(print)

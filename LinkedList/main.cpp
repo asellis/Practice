@@ -13,8 +13,13 @@ void testAll(bool print = false)
 	copyConstructor(print);
 	addToStart(print);
 	addToEnd(print);
+	removeFromStart(print);
+	removeFromEnd(print);
 	first(print);
 	end(print);
+	valueAt(print);
+	addAt(print);
+	removeAt(print);
 	isEmpty(print);
 	size(print);
 }

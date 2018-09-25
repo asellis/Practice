@@ -40,6 +40,12 @@ public:
 	// Adds value to end
 	void addToEnd(const Type& value);
 
+	// Removes value from start
+	void removeFromStart();
+
+	// Removes value from end
+	void removeFromEnd();
+
 	// Returns the first element in the linked list
 	const Type& first() const;
 	Type& first();
@@ -47,6 +53,15 @@ public:
 	// Returns the last element in the linked list
 	const Type& end() const;
 	Type& end();
+
+	// Returns element at index
+	const Type& valueAt(int index) const;
+
+	// Adds value at index
+	void addAt(int index, Type value);
+
+	// Removes value at index
+	void removeAt(int index);
 
 	// Returns true if empty
 	bool isEmpty() const;
@@ -151,6 +166,33 @@ void LinkedList<Type>::addToEnd(const Type& value)
 }
 
 template <typename Type>
+void LinkedList<Type>::removeFromStart()
+{
+	if(head == nullptr)
+		throw "Empty";
+
+	Node* temp = head;
+	head = head->next;
+	delete temp;
+}
+
+template <typename Type>
+void LinkedList<Type>::removeFromEnd()
+{
+	if(head == nullptr)
+		throw "Empty";
+
+	// Get to the node before tail
+	Node* temp = head;
+	while(temp->next != tail)
+		temp=temp->next;
+	tail = temp;
+	temp = temp->next;
+	tail->next = nullptr;
+	delete temp;
+}
+
+template <typename Type>
 const Type& LinkedList<Type>::first() const
 {
 	if(head == nullptr)
@@ -180,6 +222,119 @@ Type& LinkedList<Type>::end()
 	if(tail == nullptr)
 		throw "Empty";
 	return tail->value;
+}
+
+template <typename Type>
+const Type& LinkedList<Type>::valueAt(int index) const
+{
+	if(index < 0)
+		throw "Negative Index";
+	if(head == nullptr)
+		throw "Empty";
+	int count = index;
+	Node* node = head;
+
+	while(count > 0)
+	{
+		node = node->next;
+		if(node == nullptr)
+			throw "Out of Range";
+		--count;
+	}
+	return node->value;
+}
+
+template <typename Type>
+void LinkedList<Type>::addAt(int index, Type value)
+{
+	if(index < 0)
+		throw "Negative Index";
+	if(head == nullptr)
+	{
+		head = new Node;
+		tail = head;
+		head->value = value;
+		head->next = nullptr;
+	}
+	int count = index;
+	Node* node = head;
+	Node* prev = nullptr;
+	bool isTail = false;
+	while(count > 0)
+	{
+		prev = node;
+		node = node->next;
+		if(node == nullptr)
+		{
+			isTail = true;
+			count = 0;
+		}
+		--count;
+	}
+
+	Node* temp = new Node;
+	temp->value = value;
+	if(prev == nullptr)
+	{
+		// Head Position
+		temp->next = head;
+		head = temp;
+	}
+	else if(isTail)
+	{
+		// Tail position
+		temp->next = nullptr;
+		prev->next = temp;
+		tail = temp;
+	}
+	else
+	{
+		prev->next = temp;
+		temp->next = node;
+	}
+}
+
+template <typename Type>
+void LinkedList<Type>::removeAt(int index)
+{
+	if(index < 0)
+		throw "Negative Index";
+	if(head == nullptr)
+	{
+		throw "Empty";
+	}
+	int count = index;
+	Node* node = head;
+	Node* prev = nullptr;
+	bool isTail = false;
+	while(count > 0)
+	{
+		prev = node;
+		node = node->next;
+		if(node == nullptr)
+		{
+			isTail = true;
+			count = 0;
+		}
+		--count;
+	}
+	
+	if(prev == nullptr)
+	{
+		// Head Position
+		head = head->next;
+	}
+	else if(isTail)
+	{
+		// Tail position
+		tail = prev;
+		prev->next = nullptr;
+	}
+	else
+	{
+		prev->next = node->next;
+	}
+	delete node;
 }
 
 template <typename Type>
