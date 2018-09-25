@@ -8,4 +8,4 @@ val:
 	valgrind ./main.out
 
 clean:
-	rm main
+	rm main.out
