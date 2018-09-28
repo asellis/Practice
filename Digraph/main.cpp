@@ -9,6 +9,9 @@ void testAll(bool print = false)
 	emptyConstructor(print);
 	addVertex(print);
 	addEdge(print);
+	getVertecies(print);
+	getEdges(print);
+	getEdge(print);
 }
 
 int main()

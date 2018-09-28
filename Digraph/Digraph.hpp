@@ -13,6 +13,7 @@ about it's outgoing edges.
 #include <map>
 #include <utility>
 #include <vector>
+#include <algorithm>
 
 // Class Error
 class DigraphException
@@ -63,7 +64,7 @@ public:
 	// Returns a vector of all the "from" and "to" vertex numbers as a pair
 	std::vector<std::pair<int, int>> edges() const;
 
-	// Returns a vector of the "from" and "to" vertex numbers for a given
+	// Returns a vector of the edges "from" and "to" vertex numbers for a given
 	// vertex as a pair
 	std::vector<std::pair<int, int>> edges(int vertex) const;
 
@@ -126,5 +127,46 @@ void Digraph<VertexInfo, EdgeInfo>::addEdge(int fromVertex, int toVertex, const 
 		throw DigraphException();
 
 }
+
+template <typename VertexInfo, typename EdgeInfo>
+std::vector<int> Digraph<VertexInfo, EdgeInfo>::vertices() const
+{
+	std::vector<int> v;
+	for(const auto& mapPair : vMap)
+		v.push_back(mapPair.first);
+	return v;
+}
+
+template <typename VertexInfo, typename EdgeInfo>
+std::vector<std::pair<int, int>> Digraph<VertexInfo, EdgeInfo>::edges() const
+{
+	std::vector<std::pair<int, int>> e;
+	for(const auto& mapPair : vMap)
+	{
+		for(const auto& edge : mapPair.second.edges)
+		{
+			if(std::find(e.begin(), e.end(), std::pair<int, int>(edge.fromVertex, edge.toVertex)) == e.end())
+			{
+				e.push_back(std::pair<int, int>(edge.fromVertex, edge.toVertex));
+			}
+		}
+	}
+	return e;
+}
+
+template <typename VertexInfo, typename EdgeInfo>
+std::vector<std::pair<int, int>> Digraph<VertexInfo, EdgeInfo>::edges(int vertex) const
+{
+	std::vector<std::pair<int, int>> e;
+	if(vMap.find(vertex) != vMap.end())
+	{
+		for(const auto& edge : vMap.at(vertex).edges)
+		{
+			e.push_back(std::pair<int, int>(edge.fromVertex, edge.toVertex));
+		}
+	}
+	return e;
+}
+
 
 #endif

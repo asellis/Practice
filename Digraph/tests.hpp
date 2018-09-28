@@ -6,7 +6,7 @@
 #include "Digraph.hpp"
 
 // Auto adds stuff to a digraph of ints
-void fillDigraph(Digraph<int, int> graph);
+void fillDigraph(Digraph<int, int> &graph);
 
 // Tests empty construction
 void emptyConstructor(bool print=false);
@@ -17,6 +17,12 @@ void addVertex(bool print = false);
 // Tests adding an edge
 void addEdge(bool print = false);
 
+// Tests getting verticies
+void getVertecies(bool print = false);
+
+// Tests getting edges
+void getEdges(bool print = false);
+void getEdge(bool print = false);
 
 
 

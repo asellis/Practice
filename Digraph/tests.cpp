@@ -3,9 +3,10 @@
 #include "Digraph.hpp"
 #include "tests.hpp"
 #include <iostream>
+#include <algorithm>
 
 
-void fillDigraph(Digraph<int, int> graph)
+void fillDigraph(Digraph<int, int> &graph)
 {
 	/*
 	Turns the graph into the following
@@ -100,6 +101,54 @@ void addEdge(bool print)
 	{
 		pass = false;
 	}
+
+	if(print && pass)
+		std::cout << "\t\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\t\tFailed" << std::endl;
+}
+
+void getVertecies(bool print)
+{
+	if(print)
+		std::cout << "getVertecies";
+	bool pass = true;
+	Digraph<int, int> a = Digraph<int, int>();
+	fillDigraph(a);
+	std::vector<int> v = a.vertices();
+	pass = pass && bool(v.size()==7) && bool(std::find(v.begin(), v.end(), 4) != v.end());
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void getEdges(bool print)
+{
+	if(print)
+		std::cout << "getEdges";
+	bool pass = true;
+	Digraph<int, int> a = Digraph<int, int>();
+	fillDigraph(a);
+	std::vector<std::pair<int, int>> v = a.edges();
+	pass = pass && bool(v.size()==8) && bool(std::find(v.begin(), v.end(), std::pair<int, int>(4, 7)) != v.end());
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void getEdge(bool print)
+{
+	if(print)
+		std::cout << "getEdge";
+	bool pass = true;
+	Digraph<int, int> a = Digraph<int, int>();
+	fillDigraph(a);
+	std::vector<std::pair<int, int>> v = a.edges(1);
+	pass = pass && bool(v.size()==2) && bool(std::find(v.begin(), v.end(), std::pair<int, int>(1, 3)) != v.end());
 
 	if(print && pass)
 		std::cout << "\t\t\t\tPassed" << std::endl;
