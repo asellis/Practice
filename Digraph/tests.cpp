@@ -14,11 +14,12 @@ void fillDigraph(Digraph<int, int> &graph)
 	/ up
 	- straight
 
-	1 -	2 - 4 
+					Distance to end
+	1 -	2 - 4 		shortest
 	  \       \
-        3 - 5 - 7
+        3 - 5 - 7	2nd shortest
           \   /
-            6
+            6		3rd shortest
 	*/
 
 	// Adding vertecies
@@ -154,4 +155,55 @@ void getEdge(bool print)
 		std::cout << "\t\t\t\tPassed" << std::endl;
 	else if(print)
 		std::cout << "\t\t\t\tFailed" << std::endl;
+}
+
+void getVertexInfo(bool print)
+{
+	if(print)
+		std::cout << "getVertexInfo";
+	bool pass = true;
+	Digraph<int, int> a = Digraph<int, int>();
+	fillDigraph(a);
+	pass = pass && bool(a.vertexInfo(1) == 1) && bool(a.vertexInfo(2) == 2);
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+void getEdgeInfo(bool print)
+{
+	if(print)
+		std::cout << "getEdgeInfo";
+	bool pass = true;
+	Digraph<int, int> a = Digraph<int, int>();
+	fillDigraph(a);
+	pass = pass && bool(a.edgeInfo(1,2) == 1) && bool(a.edgeInfo(6,7) == 8);
+
+	if(print && pass)
+		std::cout << "\t\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\t\tFailed" << std::endl;
+}
+
+double convertEdgeInfo(int eInfo)
+{
+	return static_cast<double>(eInfo);
+}
+
+void shortestDistance(bool print)
+{
+	if(print)
+		std::cout << "shortestDistance";
+	bool pass = true;
+	Digraph<int, int> a = Digraph<int, int>();
+	fillDigraph(a);
+	std::map<int, int> v = a.findShortestPaths(1, convertEdgeInfo);
+	pass = pass && bool(v[7] == 4) && bool(v[6] == 3) && bool(v[1] = 1);
+
+	if(print && pass)
+		std::cout << "\t\tPassed" << std::endl;
+	else if(print)
+		std::cout << "\t\tFailed" << std::endl;	
 }

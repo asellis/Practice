@@ -12,6 +12,9 @@ void testAll(bool print = false)
 	getVertecies(print);
 	getEdges(print);
 	getEdge(print);
+	getVertexInfo(print);
+	getEdgeInfo(print);
+	shortestDistance(print);
 }
 
 int main()

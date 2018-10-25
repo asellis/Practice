@@ -24,6 +24,14 @@ void getVertecies(bool print = false);
 void getEdges(bool print = false);
 void getEdge(bool print = false);
 
+// Tests getting info from vertex or edge
+void getVertexInfo(bool print = false);
+void getEdgeInfo(bool print = false);
+
+// Tests shortest distance
+void shortestDistance(bool print = false);
+// helper function to return edgeInfo as a double
+double convertEdgeInfo(int eInfo);
 
 
 #endif

@@ -14,6 +14,7 @@ about it's outgoing edges.
 #include <utility>
 #include <vector>
 #include <algorithm>
+#include <functional>
 
 // Class Error
 class DigraphException
@@ -68,6 +69,19 @@ public:
 	// vertex as a pair
 	std::vector<std::pair<int, int>> edges(int vertex) const;
 
+	// Returns the vertex info
+	VertexInfo vertexInfo(int vertex) const;
+
+	// Returns the edge info
+	EdgeInfo edgeInfo(int fromVertex, int toVertex) const;
+
+	// Returns the shortest path to every other vertex from a start vertex
+	// Returned as a map where the keys are the vertex numbers and the value
+	// is the precedessor of that vertex
+	// Uses Dijkstra's algorithm
+	// Uses a function to compare the edge infos
+	std::map<int, int> findShortestPaths(int startVertex, std::function<double(const EdgeInfo&)>
+		edgeWeightFunc) const;
 	
 
 private:
@@ -168,5 +182,135 @@ std::vector<std::pair<int, int>> Digraph<VertexInfo, EdgeInfo>::edges(int vertex
 	return e;
 }
 
+template <typename VertexInfo, typename EdgeInfo>
+VertexInfo Digraph<VertexInfo, EdgeInfo>::vertexInfo(int vertex) const
+{
+	if(vMap.find(vertex) != vMap.end())
+		return vMap.at(vertex).vinfo;
+	return VertexInfo{};
+}
+
+template <typename VertexInfo, typename EdgeInfo>
+EdgeInfo Digraph<VertexInfo, EdgeInfo>::edgeInfo(int fromVertex, int toVertex) const
+{
+	if(vMap.find(fromVertex) != vMap.end())
+	{
+		for(const auto& edge : vMap.at(fromVertex).edges)
+			if(edge.toVertex == toVertex)
+				return edge.einfo;
+	}
+	return EdgeInfo{};
+}
+
+template <typename VertexInfo, typename EdgeInfo>
+std::map<int, int> Digraph<VertexInfo, EdgeInfo>::findShortestPaths(
+	int startVertex,
+	std::function<double(const EdgeInfo&)> edgeWeightFunc) const
+{
+	// Unoptimized
+
+	// all items are stored in vectors where the index of one vector corresponds to
+	// the same vertex of the other vectors
+	std::vector<int> vertex;	// holds all the vertecies
+	std::vector<bool> k;		// contains wether the shortest path for a vertex has been found
+	std::vector<int> p;			// holds the previous vertex for the shortest path
+								// will be -1 for none values
+	std::vector<int> d;			// the evaluation/distance from start vertex
+								// max int for values not yet initiallized
+
+	// setting up the vectors with their default values
+	for( const auto& m_pair : vMap)
+	{
+		vertex.push_back(m_pair.first);
+		k.push_back(false);
+
+		// copy the vertex into p only for the initial vertex
+		if(m_pair.first == startVertex)
+		{
+			p.push_back(m_pair.first);
+			d.push_back(0);
+		}
+		else
+		{
+			p.push_back(-1);
+			d.push_back(std::numeric_limits<int>::max());
+		}
+	}
+		
+	// will keep doing the algorithm until all shortest paths are found
+	while(std::find(std::begin(k), std::end(k), false) != std::end(k))
+	{
+		// check if all false are inf
+		// if position = -1 then no more positions found
+
+		// find the smallest d that is false and store index into position
+		int smallest_d = std::numeric_limits<int>::max();
+		int position = -1;
+		for( int i = 0; i < vertex.size(); ++i)
+		{
+			if( d[i] < smallest_d & k[i]==false)
+			{
+				position = i;
+				smallest_d = d[i];
+			}
+
+		}
+
+		if(position == -1)
+		{
+			for( int i = 0; i < vertex.size(); ++i)
+			{
+				if( k[i]==false )
+				{
+					// copy vertex for those that can't be reached
+					p[i]=vertex[i];
+				}
+
+			}
+			break;
+		}
+
+		// mark the vertex's k value as true
+		k[position] = true;
+
+		// iterate through edges of vertex with smallest d
+		for( const auto& edge : vMap.at(vertex[position]).edges )
+		{
+			// find position of edge to
+			auto it = std::find(vertex.begin(), vertex.end(), edge.toVertex);
+			int index = -1;
+			if(it != vertex.end())
+			{
+				index = std::distance(vertex.begin(), it);
+			}
+			if(index != -1)
+			{
+				// inital case
+				if(d[index] == std::numeric_limits<int>::max())
+				{
+					d[index] = d[position] + edgeWeightFunc(edge.einfo);
+					p[index] = vertex[position];
+				}
+				// case if it is shorter
+				else if(d[index] > d[position]+edgeWeightFunc(edge.einfo))
+				{
+					d[index] = d[position]+edgeWeightFunc(edge.einfo);
+					p[index] = vertex[position];
+				}
+			}
+		}
+	}
+
+	// put everything into a map
+	std::map<int, int> paths;
+	
+	for(int i = 0; i < vertex.size(); ++i)
+	{
+		paths[vertex[i]] = p[i];
+	}
+	
+    return paths;
+
+}
 
 #endif
