@@ -1,6 +1,5 @@
 /*
 Implementation of a Linked List with pointers at the head and tail.
-Implemented everything into .hpp file to avoid issues with using template
 */
 
 #ifndef LINKEDLIST_HPP

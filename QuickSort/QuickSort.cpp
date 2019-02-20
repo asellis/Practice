@@ -48,11 +48,8 @@ void QuickSort(int arr[], int low, int high)
 		int pivot_index = partition(arr, low, high);	// The position where swapping takes place
 		QuickSort(arr, low, pivot_index-1);				// Will partition everyting left of pivot
 		QuickSort(arr, pivot_index+1, high);			// Will partition everything right of pivot
-
 	}
 }
-
-
 
 void print(int arr[], int size)
 {

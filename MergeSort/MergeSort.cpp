@@ -72,7 +72,6 @@ void MergeSort(int arr[], int left, int right)
 
 		merge(arr, left, mid, right);
 	}
-
 }
 
 void print(int arr[], int size)
@@ -104,7 +103,7 @@ int main()
 	print(arr2, n2);
 	MergeSort(arr2, 0, n2-1);
 	print(arr2, n2);
-	
+
 
 	return 0;
 }

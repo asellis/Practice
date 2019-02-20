@@ -1,7 +1,6 @@
 /*
 Contains the code for a Directed Graph
 Vertecies are stored as integers
-Function definitions in header file to avoid trouble using type template
 All vertecies are stored in a map (vMap).  Each vertex contains information
 about it's outgoing edges.
 */
@@ -207,12 +206,10 @@ std::map<int, int> Digraph<VertexInfo, EdgeInfo>::findShortestPaths(
 	int startVertex,
 	std::function<double(const EdgeInfo&)> edgeWeightFunc) const
 {
-	// Unoptimized
-
 	// all items are stored in vectors where the index of one vector corresponds to
 	// the same vertex of the other vectors
 	std::vector<int> vertex;	// holds all the vertecies
-	std::vector<bool> k;		// contains wether the shortest path for a vertex has been found
+	std::vector<bool> k;		// contains whether the shortest path for a vertex has been found
 	std::vector<int> p;			// holds the previous vertex for the shortest path
 								// will be -1 for none values
 	std::vector<int> d;			// the evaluation/distance from start vertex
